@@ -1,0 +1,23 @@
+<center>
+<form action="/deliveryDT">
+    <h2>
+    Courier Details
+  </h2>
+  <p id="demo"></p>
+  <input type="radio" name="Courier" id="free" value="free" checked> Free $0: 2 day wait<br>
+  <input type="radio" name="Courier" id="express" value="Express"> Express $10: Next Day<br>
+  <br>
+  <input type="submit" onclick="pageLoad()" value="Submit Courier">
+</form>
+
+
+
+</center>
+
+<script>
+  window.onload = function() {
+  
+   var x = localStorage.getItem("address");
+   document.getElementById("demo").innerHTML = "Delivery Address: " + x;
+  }
+</script>
