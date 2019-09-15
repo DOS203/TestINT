@@ -15,8 +15,6 @@ const db = require('./config/database');
 // Load routes
 const users = require('./routes/users');
 
-const delivery = require('./routes/delivery');
-
 // Passport Config
 require('./config/passport')(passport);
 
@@ -68,19 +66,18 @@ app.use(function(req, res, next){
 });
 
 // Index Route
-app.get('/', (req, res) => {
+app.get('/', function(req, res) {
   const title = 'Welcome';
   res.render('index', {
     title: title
   });
 });
 
+
 // About Route
 app.get('/about', (req, res) => {
   res.render('about');
 });
-
-
 
 app.get('/delivery', (req, res) => {
   res.render('delivery');
@@ -97,13 +94,11 @@ app.get('/deliveryDT', (req, res) => {
 // Use routes
 app.use('/users', users);
 
-app.use('/delivery', delivery);
 
-//Load 404 page (if page is not exist!)
-app.use((req ,res) => res.render('not_found'));
 
 const port = process.env.PORT || 5000;
 
 app.listen(port, () =>{
   console.log(`Server started on port ${port}`);
 });
+

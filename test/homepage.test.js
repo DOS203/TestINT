@@ -37,12 +37,12 @@ describe("Register page", function() {
 })
 
 describe("Register page", function() {
-    it("Post New user data", function() {
+    it("Post New user data", function(done) {
         request(app).post("/register")
             .send({firstname: "max", lastname:"don", email:"don@mail.com", password:"testpass", password2: "testpass" })
             .expect(302)
             .expect('Location', /\//)
-            .expect('Location', /\/register/)
+            .expect('Location', /\/register/, done() )
        
     
     })
@@ -52,9 +52,10 @@ describe("Register page", function() {
 //Logout
 
 describe("Logout", function() {
-    it("User Logout from EasyGo", function() {
+    it("User Logout from EasyGo", function(done) {
  
         request(app).get("/login")
-            .expect(200)
+            .expect(200, done())
+        
     })
 })

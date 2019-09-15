@@ -1,7 +1,3 @@
-.navbar{
-  background-color: #316b18;
-  height: 50px;
-}
 .logo{
   display: block;
   margin-left: auto;
@@ -9,6 +5,11 @@
   width: 25%;
   
 }
+.navbar{
+  background-color: #316b18;
+  height: 50px;
+}
+
 .navbarBottom{
   background-color: #bfa73b;
   
@@ -71,4 +72,3 @@
 .carousel-item img{
   height: 300px;
 }
-
