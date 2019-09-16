@@ -1,0 +1,98 @@
+{{# if products}}
+<div class="container cart-columns" style="margin-top: 20px;">
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+        <ul class="list-group">
+            {{# each products}}
+            <!--{{# each this}}!-->
+             <li class="list-group-item">
+            <span class="badge">{{ this.qty }}</span>
+            <strong>{{this.title}}</strong>
+            <span class="label label-success">${{this.price}}</span>
+            <div class="btn-group">
+
+                    
+
+            <div class="dropdown">
+                <button class="btn btn-primary btn-xs dropdown-toggle" type="button">
+                    Reduce
+                </button>
+
+                <button class="btn btn-danger btn-xs">
+                        Remove
+                </button>
+
+                <button class="btn btn-success btn-xs">
+                        <a href="#" class="text-white">Add more</a>
+                </button>
+                </div>
+
+                
+            </div>
+            </li>
+               <!-- {{/ each}}!-->
+            {{/ each}}
+
+
+
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+        <strong>Total Qty: {{totalQty}}</strong>
+        
+    </div>
+     
+</div>
+
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+ 
+       <strong>Total Price:$ {{totalPrice}}</strong>
+        
+    </div>
+     
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+       <button type="button" class="btn btn-success text-white"><a href="/users/payment" class="text-white">Checkout</a> </button>
+
+       <button type="button" class="btn btn-success text-white"><a href="/payment" class="text-white">Checkout</a> </button>
+
+    </div>
+</div>
+</div>
+
+
+
+
+
+    {{ else }}
+<div class="container">
+  <h2>No items on cart.</h2>
+</div>
+
+</div>
+
+
+
+
+
+
+
+    
+
+{{/ if}}
+
+
+
+
+
+
+

@@ -2,6 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const async = require('async');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 const {ensureAuthenticated} = require('../helpers/auth');
 const router = express.Router();
 
@@ -10,35 +13,25 @@ require('../models/User');
 const User = mongoose.model('users');
 
 // User Login Route
-router.get('/login', (req, res,next) => {
+router.get('/login', (req, res) => {
   res.render('users/login');
- 
 });
-//User forgot password
-router.get('/forgot', (req, res) => {
-  res.render('users/forgot');
-  
+// User areusure Route
+router.get('/areusure', ensureAuthenticated , (req, res) => {
+  res.render('users/areusure');
 });
-
-//User forget password POST
 
 
 
 // User Register Route
 router.get('/register', (req, res) => {
   res.render('users/register');
-
 });
 
-// User Payment Route
-router.get('/payment', (req, res) => {
-  res.render('users/payment');
-});
 
-// User Payment POST
-router.post('/payment', (req, res, next) => {
-  req.flash('success_msg', 'Payment Successful');
-  res.redirect('/');
+// cart route
+router.get('/cart', (req, res)=>{
+  res.render('users/cart');
 });
 
 //User Update Route
@@ -50,27 +43,53 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
     res.render('users/edit', {
       user:user
     });
-    
   });
-  return res.status(403);
 });
 
 // User Privilege get
 router.get('/privilege', (req, res) => {
-  res.render('users/privilege');
+  var searchEmail = req.query.searchEmail;
+  if (searchEmail == null || searchEmail == "") { // check if search is empty
+    var userArray = User.find();
+  } else {
+    var userArray = User.find({ email: searchEmail}); //search by email
+  }
+  var allUsers = [];
+  userArray.exec(function(err, users){
+    if(err)
+      return consol.log(err);
+    users.forEach(function(user){
+      var elem = new Object();
+      elem["firstname"] = user.firstname;
+      elem["lastname"] = user.lastname;
+      elem["email"] = user.email;
+      elem["privilege"] = user.privilege;
+      elem["id"] = user.id;
+
+      allUsers.push(elem);
+      console.log(elem);
+    });
+    if (allUsers.length == 0) { //check if search failed
+      req.flash('error_msg', 'Search Failed');
+      res.redirect(303, '/users/privilege');
+    } else {
+    res.render('users/privilege', {users: allUsers});
+  }
+  });
 });
 
-// User areusure get
-router.get('/areusure', (req, res) => {
-  res.render('users/areusure');
-});
-
-
-// User privilege POST
-router.post('/privilege', (req, res, next) => {
-  User.findOne({id: req.body.id})
+// User privilege post
+router.put('/privilege/:id', (req, res) => { //update privilege level of user
+  User.findOne({
+    _id: mongoose.Types.ObjectId(req.params.id)
+  })
   .then(user => {
     user.privilege = req.body.privilege;
+    user.save()
+      .then(user => {
+        req.flash('success_msg', 'Privilege updated');
+        res.redirect(303, '/users/privilege');
+      })
   });
 });
 
@@ -120,7 +139,8 @@ router.post('/register', (req, res) => {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            privilege: "1"
           });
 
           bcrypt.genSalt(10, (err, salt) => {
@@ -172,12 +192,134 @@ router.delete('/:id', ensureAuthenticated, (req, res) => {
 });
 
 
-
 // Logout User
 router.get('/logout', (req, res) => {
   req.logout();
   req.flash('success_msg', 'You are logged out');
   res.redirect('/users/login');
 });
+
+
+//User Forgot Password
+router.get('/forgot', (req,res) => {
+  res.render('users/forgot');
+});
+
+
+//Forgot password Post
+router.post('/forgot', function(req,res,next) {
+  async.waterfall([
+    function(done) {
+      crypto.randomBytes(20, function(err, buf) {
+        const token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    function(token, done) {
+      User.findOne({ email: req.body.email }, function(err, user) {
+        if (!user) {
+          req.flash('error_msg', 'No account with that email address exists.');
+          return res.redirect('/users/forgot');
+        }
+
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        user.save(function(err) {
+          done(err, token, user);
+        });
+      });
+    },
+    function(token, user, done) {
+      const smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: 'easyg3044@gmail.com',
+          pass: 'Easygo123'
+        }
+      });
+      const mailOptions = {
+        to: user.email,
+        from: 'easyg3044@gmail.com',
+        subject: 'Reset Your EasyGo Password',
+        text: 'Hi ' + user.firstname + ' Forgot your EasyGo password? \n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host + '/users/reset/' + token + '\n\n' + '\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n' +
+          '\n\n' + '*To ensure your EasyGo account remains as safe and secure as possible, this password reset request expires in 48 hours.'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        console.log('mail sent');
+        req.flash('success_msg', 'We sent you a link to reset your password.');
+        done(err, 'done');
+      });
+    }
+  ], function(err) {
+    if (err) return next(err);
+    res.redirect('/users/forgot');
+  });
+});
+//reset router
+router.get('/reset/:token', function(req, res) {
+  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    if (!user) {
+      req.flash('error_msg', 'Password reset link is invalid or has expired.');
+      return res.redirect('/users/forgot');
+    }
+    res.render('users/reset',{token: req.params.token});
+  });
+});
+
+router.post('/reset/:token', function(req, res) {
+  async.waterfall([
+    function(done) {
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        if (!user) {
+          req.flash('error_msg', 'Password reset link is invalid or has expired.');
+          return res.redirect('back');
+        }
+        if(req.body.password === req.body.confirm) {
+          user.setPassword(req.body.password, function(err) {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpires = undefined;
+
+            user.save(function(err) {
+              req.logIn(user, function(err) {
+                done(err, user);
+              });
+            });
+          })
+        } else {
+            req.flash("error_msg", "Passwords do not match.");
+            return res.redirect('back');
+        }
+      });
+    },
+    function(user, done) {
+      const smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: 'easyg3044@gmail.com',
+          pass: 'Easygo123'
+        }
+      });
+      const mailOptions = {
+        to: user.email,
+        from: 'easyg3044@gmail.com',
+        subject: 'Your password has been changed',
+        text: 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        console.log('mail sent for Succ');
+        req.flash('success_msg', 'Success! Your password has been changed.');
+        done(err);
+      });
+    }
+  ], function(err) {
+    res.redirect('/');
+  });
+});
+
 
 module.exports = router;

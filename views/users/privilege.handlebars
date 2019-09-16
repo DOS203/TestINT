@@ -9,54 +9,55 @@
         .tg .tg-abip{background-color:#f9f9f9;border-color:inherit;text-align:center;vertical-align:top}
         .tg .tg-dzk6{background-color:#f9f9f9;text-align:center;vertical-align:top}
     </style>
-  <!--   <form action="/users/success" method="get"> -->
+    <div>
+      <div style="display: inline-block">
       <table class="tg">
         <tr>
-          <th class="tg-c3ow" colspan="5">Users</th>
+          <th class="tg-c3ow" colspan="6">Users</th>
         </tr>
         <tr>
-          <td class="tg-abip">ID</td>
           <td class="tg-abip">First name</td>
           <td class="tg-abip">Last name</td>
           <td class="tg-abip">Email</td>
           <td class="tg-abip">Privilege level</td>
+          <td class="tg-abip">Edit</td>
+          <td class="tg-abip"></td> <!--save button -->
         </tr>
         <tr>
-          <td class="tg-c3ow">3847582893</td>
-          <td class="tg-c3ow">doing</td>
-          <td class="tg-c3ow">Smith</td>
-          <td class="tg-c3ow">lukesmith1@gmail.com</td>
-          <td class="tg-c3ow">
-            <select>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </td>
+          {{#each users as |user|}}
+          <form action="/users/privilege/{{user.id}}?_method=PUT" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+            <td class="tg-c3ow" name="firstname">{{user.firstname}}</td>
+            <td class="tg-c3ow" name="lastname">{{user.lastname}}</td>
+            <td class="tg-c3ow" name="email">{{user.email}}</td>
+            <td class="tg-c3ow" name="privilegeLevel">{{user.privilege}}</td>
+            <td class="tg-c3ow" name="privilege">
+              <select name="privilege" value="4">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </td>
+            <td class="tg-c3ow"><button type="submit" class="btn btn-success">Save</button></td>
         </tr>
-        <tr>
-          <td class="tg-dzk6">6547893126</td>
-          <td class="tg-dzk6">Mike</td>
-          <td class="tg-dzk6">Nolan</td>
-          <td class="tg-dzk6">mikenolan8@gmail.com</td>
-          <td class="tg-dzk6">
-            <select>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </td>
-        </tr>
+        </form>
+        {{/each}}
       </table>
+    </div>
+    <div style="display: inline-block; vertical-align: top;">
+      <h6>Search</h6>
+      <form action="/users/privilege/" method="get">
+        <input type="text" name="searchEmail" placeholder="Search by email...">
+        <button type="submit" class="btn btn-success">Search</button>
+      </form>
+    </div>
+    </div>
       <br>
-      <div display="inline" margin="5px">
-        <a><button class="btn btn-primary">Save Changes</button></a>
-        <a href="/">
-          <button class="btn btn-primary">Home</button>
-        </a>
-      </div>
-<!--    </form> -->
+    <div display="inline" margin="5px">
+      <a href="/">
+        <button class="btn btn-success">Home</button>
+      </a>
+    </div>
   </div>
 </div>

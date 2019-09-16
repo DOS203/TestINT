@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-md-6 mx-auto">
-    
+    <br><br><br><br>
       <h3 class="text-center"><font color="red">Are you sure you want to deactivate your account?</font></h3>
       <ul style="list-style-type:disc;">
             <li>Deactivation will be immediate.</li>
             <li>You won’t be able to log into EasyGo anymore.</li>
             <li>You’ll lost access to all your EasyGo data and conversations.</li>
-            <li>Only EasyGo administrator will be able to restore your access.</li>
+          
       </ul>
        <form method="post" action="/users/{{user.id}}?_method=DELETE">
       <input type="hidden" name="_method" value="DELETE"> 

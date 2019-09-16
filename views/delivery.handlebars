@@ -1,29 +1,22 @@
- <center>
- <h1>
-  Delivery System Prototype
-  </h1>
-
-  <form action="/courier">
+  <center>
+  <form id="del" method="post" action="delivery/delivery">
     <h2>
     Delivery Details
   </h2>
-    Appartment Number:
-    <input type="number" name="appNum" id="appNum" maxlength="5">
-    <br>
-    Street Number:
-    <input type="number" name="steetNum" id="streetNum" maxlength="5" required>
-    <br>
-    Street Name:
-    <input type="text" name="streetName" id="streetName" maxlength="30" required>
-    <br>
-    Suburb:
-    <input type="text" name="suburbName" id="suburbName" maxlength="15" required>
-    <br>
-    Postcode:
-    <input type="number" name="postcode" id="postcodeNum" maxlength="4" required>
-    <br>
-    State:
-    <select name="state" id="state" required>
+    <p style="text-align: left; font-weight: bold;">Street & Appartment Number:</p>
+    <input type="text" class="form-control" name="streetNumber" maxlength="10" placeholder="1/1 or 1A or 1" value="{{streetNumber}}" required></input>
+    <p style="text-align: left; font-weight: bold;">
+    Street Name:</p>
+    <input type="text" class="form-control" name="streetName" maxlength="30" placeholder="Fake St" value="{{streetName}}" required></input>
+    <p style="text-align: left; font-weight: bold;">
+    Suburb:</p>
+    <input type="text" class="form-control" name="suburb" maxlength="20" placeholder="Ultimo" value="{{suburb}}" required></input>
+    <p style="text-align: left; font-weight: bold;">
+    Postcode:</p>
+    <input type="number" class="form-control" name="postcode" maxlength="4" placeholder="2100" value="{{postcode}}" required></input>
+    <p style="text-align: left; font-weight: bold;">
+    State:</p>
+    <select class="form-control" name="state" value="{{state}}" required>
       <option value="NSW">NSW</option>
       <option value="QLD">QLD</option>
       <option value="VIC">VIC</option>
@@ -32,11 +25,7 @@
       <option value="SA">SA</option>
       <option value="NT">NT</option>
     </select>
-    <br>
-  <input type="button" onclick="showData()" value="Verify">
   <br>
-  <label id="yourAddress"></label>
-  <p><span id='display'></span></p>
-  <input type="submit" id="formSubmit" value="Submit Address">
-  </form>
+  <input type="submit" value="Submit Address">
+</form>
 </center>

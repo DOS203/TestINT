@@ -1,3 +1,7 @@
+.navbar{
+  background-color: #316b18;
+  height: 50px;
+}
 .logo{
   display: block;
   margin-left: auto;
@@ -5,11 +9,6 @@
   width: 25%;
   
 }
-.navbar{
-  background-color: #316b18;
-  height: 50px;
-}
-
 .navbarBottom{
   background-color: #bfa73b;
   
@@ -71,4 +70,55 @@
 
 .carousel-item img{
   height: 300px;
+}
+
+
+
+
+
+
+
+
+
+
+.navbar{
+  margin-bottom: 20px;
+}
+
+
+.card {
+  border: none;
+}
+
+.card-text{
+  color: #7f7f7f;
+}
+.card img{
+  max-height: 150px;
+  max-width: 200px;;
+
+}
+
+.price {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.thumbnail img{
+  max-height: 150px;
+  margin: 5px;
+}
+
+.description{
+  color: #7f7f7f;
+}
+
+.thumbnail-columns{
+  border-radius:10px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.cart-columns{
+  margin-left: 50px;
 }

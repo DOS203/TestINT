@@ -1,28 +1,118 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-success mb-3">
-  <div class="container">
-    <a class="navbar-brand text-white" href="/"><h2>easyGO</h2></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-      aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link text-white" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="/about">About</a>
-        </li>
-        <li class="nav-item">
-            <form class="form-line">
-              <input class="form-control mr-sm-2" type="search" placeholder="Products" aria-label="Search">
 
-            </form>
-            <a href="/users/search" class="nav-link text-white">Search Product</a>
+
+      <nav class="navbar navbar-expand-md navbar-light topNav" >
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="#" ><h2><small class="font-italic">easy</small>Go</h2></a>
+
+            <button class="navbar-toggler navbar-toggler-right navbar--toggler-white" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"> </span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item">
+                          <form class="form-inline my-2 my-lg-0 ml-auto">
+                           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+                          </form>
+
+
+
+                           
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link  text-white" href="#"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+                     </li>
+
+
+
+              <!--jackson feature for release 1 !-->
+                     <li class="nav-item">
+                     <a class="nav-link text-white" href="/shopping-cart/"> <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                           Shopping Cart</a>
+                      <span class="badge">{{session.cart.totalQty}}</span>
+                    </li>
+                <!--..........!-->
+
+                
+                      {{#if user}}
+                     <li class="nav-item active">
+                            <a href="/users/edit" class="nav-link text-white">Account</a>
+                         </li>
+                         <li class="nav-item active">
+                                <a href="/users/privilege" class="nav-link text-white">Privilege Management</a>
+                             </li>
+                         <li class="nav-item active">
+                                <a class="nav-link text-white" href="#">Cart</a>
+                             </li>
+
+                             <li class="nav-item active">
+                                    <a class="nav-link text-white" href="#">Items</a>
+                            </li>
+                             <li class="nav-item">
+                              <a href="/delivery" class="nav-link">Delivery</a>
+                             </li>
+                                                 <li class="nav-item">
+            <a href="/users/logout" class="nav-link">Logout</a>
           </li>
-      
-      </ul>
-      <ul class="navbar-nav ml-auto">
+
+                              {{else}}
+                            <li class="nav-item">
+                              <a href="/users/login" class="nav-link text-white">Login | Signup</a>
+                             </li>
+                            {{/if}}
+                             <li class="nav-item ">
+                                    <i class="fas fa-user-cog fa-2x" style="color: antiquewhite;"></i>
+                             </li>
+
+                </ul>
+            </div>
+        </div>
+
+
+   </nav>
+
+  <!--Second navigation-->
+   <nav class=" navbarBottom navbar-expand-lg navbar-light sticky-top ">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link text-white" href="#">Specials <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#">Videos</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link  text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Recepies
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+
+            <li class="nav-item">
+                    <i class="fas fa-shopping-cart fa-2x" style="color: ghostwhite;"></i>
+            </li>
+          </ul>
+
+        </div>
+   </nav>
+
+
+
+
+
+     <!-- <ul class="navbar-nav ml-auto">
         {{#if user}}
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink">Account</a>
@@ -43,12 +133,11 @@
 
         {{else}}
           <li class="nav-item">
-            <a href="/users/login" class="nav-link">Login | Signup</a>
+            <a href="/users/login" class="nav-link">My Account</a>
           </li>
-         
 
         {{/if}}
-      </ul>
+      </ul>!-->
     </div>
   </div>
 </nav>
