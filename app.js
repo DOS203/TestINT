@@ -17,6 +17,8 @@ const users = require('./routes/users');
 
 const delivery = require('./routes/delivery');
 
+var indexRouter = require('./routes/index');
+
 // Passport Config
 require('./config/passport')(passport);
 
@@ -98,6 +100,8 @@ app.get('/deliveryDT', (req, res) => {
 app.use('/users', users);
 
 app.use('/delivery', delivery);
+
+app.use('/', indexRouter);
 
 //Load 404 page (if page is not exist!)
 app.use((req ,res) => res.render('not_found'));
