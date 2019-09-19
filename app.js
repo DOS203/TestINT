@@ -33,7 +33,11 @@ mongoose.Promise = global.Promise;
 
 
 // Connect to mongoose
-
+mongoose.connect(db.mongoURI, {
+  useMongoClient: true
+})
+  .then(() => console.log('MongoDB Connected...'))
+  .catch(err => console.log(err));
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/shopping', {useNewUrlParser: true});
@@ -85,12 +89,12 @@ app.use(function(req, res, next){
 });
 
 // Index Route
-//app.get('/', (req, res) => {
- // const title = 'Welcome';
- //res.render('index', {
- // title: title
-//  });
-//});
+app.get('/', (req, res) => {
+ const title = 'Welcome';
+ res.render('index', {
+ title: title
+ });
+});
 
 // About Route
 app.get('/about', (req, res) => {
@@ -126,7 +130,7 @@ app.use('/payment', payment);
 // app.use('/', indexRouter);
 
 //Load 404 page (if page is not exist!)
-// app.use((req ,res) => res.render('not_found'));
+app.use((req ,res) => res.render('not_found'));
 
 
 const port = process.env.PORT || 5000;
