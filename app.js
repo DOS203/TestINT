@@ -12,16 +12,17 @@ const cookieParser = require('cookie-parser');
 
 
 
+var indexRouter = require('./routes/index');
 
 const app = express();
 //DB config
 const db = require('./config/database');
 
 // Load routes
-const indexRouter = require('./routes/index');
 const users = require('./routes/users');
+// const payment = require('./routes/payment'); -- have a look
 const delivery = require('./routes/delivery');
-const payment = require('./routes/payment');
+
 
 
 // Passport Config
@@ -100,9 +101,9 @@ app.get('/about', (req, res) => {
   res.render('about');
 });
 
-// app.get('/payment', (req, res) => {
-//   res.render('payment');
-// });
+app.get('/payment', (req, res) => {
+  res.render('payment');
+});
 
 app.get('/delivery', (req, res) => {
   res.render('delivery');
@@ -120,14 +121,13 @@ app.get('/deliveryFree', (req, res) => {
 });
 
 // Use routes
-app.use('/', indexRouter);
-
 app.use('/users', users);
 
 app.use('/delivery', delivery);
 
-app.use('/payment', payment);
+// app.use('/payment', payment); -->> fix your javascript
 
+app.use('/', indexRouter);
 
 //Load 404 page (if page is not exist!)
 app.use((req ,res) => res.render('not_found'));
