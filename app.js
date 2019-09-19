@@ -13,10 +13,11 @@ const app = express();
 const db = require('./config/database');
 
 // Load routes
-const indexRouter = require('./routes/index');
 const users = require('./routes/users');
-const payment = require('./routes/payment');
+
 const delivery = require('./routes/delivery');
+
+var indexRouter = require('./routes/index');
 
 // Passport Config
 require('./config/passport')(passport);
@@ -107,7 +108,7 @@ app.use('/delivery', delivery);
 
 
 //Load 404 page (if page is not exist!)
-// app.use((req ,res) => res.render('not_found'));
+app.use((req ,res) => res.render('not_found'));
 
 
 const port = process.env.PORT || 5000;
