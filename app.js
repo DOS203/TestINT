@@ -123,7 +123,7 @@ app.use('/delivery', delivery);
 
 app.use('/payment', payment);
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 
 //Load 404 page (if page is not exist!)
 // app.use((req ,res) => res.render('not_found'));
