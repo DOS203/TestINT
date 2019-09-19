@@ -25,6 +25,7 @@ require('./config/passport')(passport);
 // Map global promise - get rid of warning
 mongoose.Promise = global.Promise;
 // Connect to mongoose
+mongoose.connect('mongodb://127.0.0.1:27017/shopping', {useNewUrlParser: true});
 mongoose.connect(db.mongoURI, {
   useMongoClient: true
 })
