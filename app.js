@@ -100,11 +100,11 @@ app.get('/deliveryDT', (req, res) => {
 });
 
 // Use routes
+app.use('/', indexRouter);
+
 app.use('/users', users);
 
 app.use('/delivery', delivery);
-
-app.use('/', indexRouter);
 
 app.use('/payment', payment);
 
