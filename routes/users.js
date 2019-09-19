@@ -28,10 +28,20 @@ router.get('/register', (req, res) => {
   res.render('users/register');
 });
 
+// User Payment Route
+router.get('/payment', (req, res) => {
+  res.render('users/payment');
+});
 
 // cart route
 router.get('/cart', (req, res)=>{
   res.render('users/cart');
+});
+
+// User Payment POST
+router.post('/payment', (req, res, next) => {
+  req.flash('success_msg', 'Payment Successful');
+  res.redirect('/');
 });
 
 //User Update Route
