@@ -126,7 +126,7 @@ app.use('/payment', payment);
 app.use('/', indexRouter);
 
 //Load 404 page (if page is not exist!)
-app.use((req ,res) => res.render('not_found'));
+// app.use((req ,res) => res.render('not_found'));
 
 
 const port = process.env.PORT || 5000;
