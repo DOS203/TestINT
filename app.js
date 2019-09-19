@@ -106,7 +106,6 @@ app.use('/users', users);
 
 app.use('/delivery', delivery);
 
-app.use('/payment', payment);
 
 //Load 404 page (if page is not exist!)
 app.use((req ,res) => res.render('not_found'));
