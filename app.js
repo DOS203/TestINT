@@ -21,7 +21,7 @@ const db = require('./config/database');
 const indexRouter = require('./routes/index');
 const users = require('./routes/users');
 const delivery = require('./routes/delivery');
-
+const payment = require('./routes/payment');
 
 
 // Passport Config
@@ -100,9 +100,9 @@ app.get('/about', (req, res) => {
   res.render('about');
 });
 
-app.get('/payment', (req, res) => {
-  res.render('payment');
-});
+// app.get('/payment', (req, res) => {
+//   res.render('payment');
+// });
 
 app.get('/delivery', (req, res) => {
   res.render('delivery');
@@ -126,7 +126,7 @@ app.use('/users', users);
 
 app.use('/delivery', delivery);
 
-// app.use('/payment', payment);
+app.use('/payment', payment);
 
 
 //Load 404 page (if page is not exist!)
