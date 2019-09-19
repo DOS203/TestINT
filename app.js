@@ -13,11 +13,10 @@ const app = express();
 const db = require('./config/database');
 
 // Load routes
+const indexRouter = require('./routes/index');
 const users = require('./routes/users');
-
+const payment = require('./routes/payment');
 const delivery = require('./routes/delivery');
-
-var indexRouter = require('./routes/index');
 
 // Passport Config
 require('./config/passport')(passport);
