@@ -40,7 +40,7 @@ mongoose.connect(db.mongoURI, {
   .catch(err => console.log(err));
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/shopping', {useNewUrlParser: true});
+// mongoose.connect('mongodb://127.0.0.1:27017/shopping', {useNewUrlParser: true});
 
 // puttt 
 
