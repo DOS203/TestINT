@@ -1,6 +1,8 @@
+<br>
+<br>
 <div class="row">
   <div class="col-md-6 mx-auto">
-      <img class="logo" src="/img/Update.png">
+      <img class="logo" src="/users/{{user.id}}/avatar">
       <h3 class="text-center">My Profile</h3>
       <form action="/users/{{user.id}}?_method=PUT" method="post">
       <input type="hidden" name="_method" value="PUT">
@@ -17,9 +19,23 @@
           <input type="email" name="email" class="form-control" value="{{user.email}}" required>
         </div>
     
+
+
+         
         <button type="submit" class="btn btn-primary">Save Changes</button>
 
+          
+ 
+
       </form>
+    <br>
+<br>
+<form action="/users/avatar" method="post">
+<label for="email">Change profile image</label>
+<input type="file" name="avatar">
+ <button type="submit" class="btn btn-primary">Update image</button>
+</form>
+
       <br>
       {{!-- <form method="post" action="/users/{{user.id}}?_method=DELETE">
       <input type="hidden" name="_method" value="DELETE"> --}}
