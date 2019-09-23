@@ -19,6 +19,10 @@ const paymentSchema = new Schema({
     type: String,
     required: true
   },
+  emailaddress:{
+    type: String,
+    required: true
+  },
 });
 
 mongoose.model('payment', paymentSchema);
