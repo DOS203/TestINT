@@ -20,7 +20,7 @@ const db = require('./config/database');
 
 // Load routes
 const users = require('./routes/users');
-const payment = require('./routes/payment')
+// const payment = require('./routes/payment')
 const delivery = require('./routes/delivery');
 
 
@@ -100,9 +100,6 @@ app.get('/about', (req, res) => {
   res.render('about');
 });
 
-app.get('/payment', (req, res) => {
-  res.render('payment');
-});
 
 app.get('/delivery', (req, res) => {
   res.render('delivery');
@@ -121,7 +118,7 @@ app.get('/deliveryFree', (req, res) => {
 
 // Use routes
 app.use('/users', users);
-app.use('/payment', payment);
+// app.use('/payment', payment);
 app.use('/delivery', delivery);
 
 app.use('/', indexRouter);
