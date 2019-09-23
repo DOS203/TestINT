@@ -7,26 +7,21 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const {ensureAuthenticated} = require('../helpers/auth');
 const router = express.Router();
-const multer = require('multer');
-const sharp = require('sharp');
 
 // Load User Model
 require('../models/User');
 const User = mongoose.model('users');
 
-
 // User Login Route
 router.get('/login', (req, res) => {
   res.render('users/login');
-}); 
-
-router.get('/avatar,', (req, res) => {
-  res.render('users/avatar');
-})
+});
 // User areusure Route
 router.get('/areusure', ensureAuthenticated , (req, res) => {
   res.render('users/areusure');
 });
+
+
 
 // User Register Route
 router.get('/register', (req, res) => {
@@ -42,8 +37,6 @@ router.get('/payment', (req, res) => {
 router.get('/cart', (req, res)=>{
   res.render('users/cart');
 });
-
-
 
 // User Payment POST
 router.post('/payment', (req, res, next) => {
@@ -190,7 +183,6 @@ router.put('/:id', ensureAuthenticated, (req, res) => {
     user.firstname = req.body.firstname,
     user.lastname = req.body.lastname,
     user.email = req.body.email;
-   
 
     user.save()
       .then(user => {
@@ -339,46 +331,5 @@ router.post('/reset/:token', function(req, res) {
   });
 });
 
-
-
-const upload = multer ({
-  limits: {
-    fileSize: 1000000
- },
- fileFilter(req, file, cb) {
-   if(!file.originalname.endsWith('.jpg')) {
-     return cb(new Error('Please upload an image'))
-   }
-   cb(undefined, true)
-    
-   // cb(new Error('File must be a image'))
-   // cb(undefined, true)
-   // cb(undefined, false)
- }
-})
-
-router.post('/avatar', ensureAuthenticated, upload.single('avatar'), async (req,res) => {
-   const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
-   req.user.avatar = buffer
-  await req.user.save()
-  res.redirect("/users/edit")
-}, (error, req, res, next) => {
-  res.status(400).send({error: error.message})
-});
-
-router.get('/:id/avatar', async (req, res) => {
-  try {
-      const user = await User.findById(req.params.id)
-
-      if (!user || !user.avatar) {
-          throw new Error()
-      }
-
-      res.set('Content-Type', 'image/jpg')
-      res.send(user.avatar)
-  } catch (e) {
-      res.status(404).send()
-  }
-})
 
 module.exports = router;

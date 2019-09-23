@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const multer = require('multer');
+
 
 
 
@@ -20,7 +20,7 @@ const db = require('./config/database');
 
 // Load routes
 const users = require('./routes/users');
-const payment = require('./routes/payment')
+// const payment = require('./routes/payment'); -- have a look
 const delivery = require('./routes/delivery');
 
 
@@ -58,6 +58,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
        app.use(cookieParser());
+       app.use(express.static(path.join(__dirname, 'public')));
 
 // Static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -121,40 +122,15 @@ app.get('/deliveryFree', (req, res) => {
 
 // Use routes
 app.use('/users', users);
-app.use('/payment', payment);
+
 app.use('/delivery', delivery);
+
+// app.use('/payment', payment); -->> fix your javascript
 
 app.use('/', indexRouter);
 
-
-const upload = multer ({
-  dest: 'public/images',
-  limits: {
-     fileSize: 1000000
-  },
-  fileFilter(req, file, cb) {
-    if(!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-      return cb(new Error('Please upload an image'))
-    }
-    cb(undefined, true)
-     
-    // cb(new Error('File must be an image'))
-    // cb(undefined, true)
-    // cb(undefined, false)
-  }
-})
-
-const errorMiddleware = (req, res, next) => {
-  throw new Error("From my middleware")
-}
-
-app.post('/upload', upload.single('upload'), (req,res) => {
-  res.send()
-});
-
 //Load 404 page (if page is not exist!)
 app.use((req ,res) => res.render('not_found'));
-
 
 
 const port = process.env.PORT || 5000;
@@ -162,5 +138,4 @@ const port = process.env.PORT || 5000;
 app.listen(port, () =>{
   console.log(`Server started on port ${port}`);
 });
-
 

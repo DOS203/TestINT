@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-6 mx-auto">
+    <div class="card card-body">
+      <h3 class="text-center">Payment</h3>
+      <form action="/users/payment" method="post">
+        <div class="form-group">
+          <label for="cardnum">Card Number</label>
+          <input type="text" class="form-control" name="cardnum" value = "">
+        </div>
+        <div class="form-group">
+          <label for="expiredate">Expiration Date</label>
+          <input type="text" name="expiredate" class="form-control" value="">
+        </div>
+        <div class="form-group">
+          <label for="securitycode">Security Code</label>
+          <input type="text" name="securitycode" class="form-control" value="">
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" name="name" class="form-control" value="">
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" name="address" class="form-control" value="">
+        </div>
+        <div class="form-group">
+          <label for="Name">Price: $10.00</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -39,7 +39,7 @@ router.post('/deliveryDT', (req, res) => {
   });
   newUser.save()
   .then(user => {
-    res.redirect('/payment');
+    res.redirect('/users/payment');
   })
   
 });
