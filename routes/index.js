@@ -39,10 +39,25 @@ router.get('/shopping-cart', function(req, res, next){
     return res.render('shops/shopping-cart', {products: null});
   }
     var cart = new Cart(req.session.cart);
-    res.render('shops/shopping-cart', {products: cart.generateArray(), totalPrice: cart.totalPrice});
+    res.render('shops/shopping-cart', {products: cart.generateArray(), totalPrice: cart.totalPrice, totalQty: cart.totalQty});
 });
 
+router.get('/search', function(req, res, next){
+  //return res.render('shops/search');
 
+  var searchProduct = req.query.searchProduct;
+  
+  if (searchProduct != null ) {
+    Product.find (function(err, docs){
+      var productChunks =[];
+      var chunkSize = 6;
+      for(var i=0; i<docs.length; i += chunkSize){
+        productChunks.push(docs.slice(i, i+chunkSize));
+      }
+      res.render('shops/search', { title: 'Shopping cart', products : productChunks});
+    });
+   }
+});
 
 
 module.exports = router;

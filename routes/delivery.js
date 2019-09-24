@@ -14,6 +14,16 @@ const thisDel = new Del;
 router.get('/delivery', (req, res) => {
   res.render('/delivery');
 });
+router.get('/deliveryTracking', (req, res) => {
+  var ID = req.body.deliveryID;
+    Del.findOne({postcode:[ID]}, function(err, item) {  
+        if (item == null) {console.log("Incorrect ID")}
+        else {
+          console.log("Delivery Found");
+        }
+    })
+});
+
 
 // Register Form POST
 router.post('/delivery', (req, res) => {

@@ -30,11 +30,16 @@
       </form>
     <br>
 <br>
-<form action="/users/avatar" method="post">
-<label for="email">Change profile image</label>
+<form action="/users/avatar" method="post" enctype="multipart/form-data">
+<label for="Image">Change profile image</label>
 <input type="file" name="avatar">
- <button type="submit" class="btn btn-primary">Update image</button>
+ <button type="submit" class="btn btn-primary">Upload image</button>
 </form>
+
+{{!-- <form action="/users/avatar" method="delete" enctype="multipart/form-data">
+ <button type="submit" class="btn btn-primary">DELETE image</button>
+</form> --}}
+
 
       <br>
       {{!-- <form method="post" action="/users/{{user.id}}?_method=DELETE">

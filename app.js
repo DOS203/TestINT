@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const multer = require('multer');
+
 
 
 
@@ -20,7 +20,8 @@ const db = require('./config/database');
 
 // Load routes
 const users = require('./routes/users');
-// const payment = require('./routes/payment')
+const orders = require('./routes/orders');
+const payment = require('./routes/payment')
 const delivery = require('./routes/delivery');
 
 
@@ -42,9 +43,9 @@ mongoose.connect(db.mongoURI, {
 
   //  mongoose.connect('mongodb://127.0.0.1:27017/shopping', {useNewUrlParser: true});
 
-// puttt 
+// puttt
 
-  
+
 
 
 // Handlebars Middleware
@@ -58,6 +59,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
        app.use(cookieParser());
+       app.use(express.static(path.join(__dirname, 'public')));
 
 // Static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -100,6 +102,9 @@ app.get('/about', (req, res) => {
   res.render('about');
 });
 
+app.get('/payment', (req, res) => {
+  res.render('payment');
+});
 
 app.get('/delivery', (req, res) => {
   res.render('delivery');
@@ -112,46 +117,23 @@ app.get('/courier', (req, res) => {
 app.get('/deliveryDT', (req, res) => {
   res.render('deliveryDT');
 });
+app.get('/deliveryTracking', (req, res) => {
+  res.render('deliveryTracking');
+});
 app.get('/deliveryFree', (req, res) => {
   res.render('deliveryFree');
 });
 
 // Use routes
 app.use('/users', users);
-// app.use('/payment', payment);
+app.use('/payment', payment);
+app.use('/orders', orders);
 app.use('/delivery', delivery);
 
 app.use('/', indexRouter);
 
-
-const upload = multer ({
-  dest: 'public/images',
-  limits: {
-     fileSize: 1000000
-  },
-  fileFilter(req, file, cb) {
-    if(!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-      return cb(new Error('Please upload an image'))
-    }
-    cb(undefined, true)
-     
-    // cb(new Error('File must be an image'))
-    // cb(undefined, true)
-    // cb(undefined, false)
-  }
-})
-
-const errorMiddleware = (req, res, next) => {
-  throw new Error("From my middleware")
-}
-
-app.post('/upload', upload.single('upload'), (req,res) => {
-  res.send()
-});
-
 //Load 404 page (if page is not exist!)
 app.use((req ,res) => res.render('not_found'));
-
 
 
 const port = process.env.PORT || 5000;
@@ -159,5 +141,3 @@ const port = process.env.PORT || 5000;
 app.listen(port, () =>{
   console.log(`Server started on port ${port}`);
 });
-
-

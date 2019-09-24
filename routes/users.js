@@ -14,19 +14,16 @@ const sharp = require('sharp');
 require('../models/User');
 const User = mongoose.model('users');
 
-
 // User Login Route
 router.get('/login', (req, res) => {
   res.render('users/login');
-}); 
-
-router.get('/avatar,', (req, res) => {
-  res.render('users/avatar');
-})
+});
 // User areusure Route
 router.get('/areusure', ensureAuthenticated , (req, res) => {
   res.render('users/areusure');
 });
+
+
 
 // User Register Route
 router.get('/register', (req, res) => {
@@ -42,8 +39,6 @@ router.get('/payment', (req, res) => {
 router.get('/cart', (req, res)=>{
   res.render('users/cart');
 });
-
-
 
 // User Payment POST
 router.post('/payment', (req, res, next) => {
@@ -110,7 +105,7 @@ router.put('/privilege/:id', (req, res) => { //update privilege level of user
   });
 });
 
-//Update Profile
+//Get Update Profile
 router.get('/edit', ensureAuthenticated, (req, res) => {
   res.render('users/edit');
 });
@@ -190,12 +185,11 @@ router.put('/:id', ensureAuthenticated, (req, res) => {
     user.firstname = req.body.firstname,
     user.lastname = req.body.lastname,
     user.email = req.body.email;
-   
 
     user.save()
       .then(user => {
         req.flash('success_msg', 'Profile updated');
-        res.redirect('/');
+        res.redirect('/users/edit');
       })
   });
 });
@@ -339,16 +333,14 @@ router.post('/reset/:token', function(req, res) {
   });
 });
 
-
-
 const upload = multer ({
   limits: {
     fileSize: 1000000
  },
  fileFilter(req, file, cb) {
-   if(!file.originalname.endsWith('.jpg')) {
-     return cb(new Error('Please upload an image'))
-   }
+  if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+    return cb(new Error('Please upload an image'))
+}
    cb(undefined, true)
     
    // cb(new Error('File must be a image'))
@@ -361,12 +353,14 @@ router.post('/avatar', ensureAuthenticated, upload.single('avatar'), async (req,
    const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
    req.user.avatar = buffer
   await req.user.save()
+  req.flash('success_msg', 'Success! Your profile image was updated');
   res.redirect("/users/edit")
 }, (error, req, res, next) => {
-  res.status(400).send({error: error.message})
+  req.flash('error_msg', 'Error! Please upload an image');
+  res.redirect("/users/edit")
 });
 
-router.get('/:id/avatar', async (req, res) => {
+router.get('/:id/avatar', ensureAuthenticated, async (req, res) => {
   try {
       const user = await User.findById(req.params.id)
 
@@ -379,6 +373,12 @@ router.get('/:id/avatar', async (req, res) => {
   } catch (e) {
       res.status(404).send()
   }
+})
+
+router.delete('/avatar', async (req, res) => {
+  req.user.avatar = undefined
+  await req.user.save()
+  res.send()
 })
 
 module.exports = router;
