@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Product = require('../models/product');
 
+
 var Cart = require('../models/cart');
 
 
@@ -34,6 +35,37 @@ router.get('/add-to-cart/:id', function(req, res, next){
   });
 });
 
+router.get('/reduce/:id',function(req, res, next){
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+  cart.reduceByOne(productId);
+  req.session.cart = cart;
+  res.redirect('/shopping-cart');
+});
+
+
+router.get('/add/:id',function(req, res, next){
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+  cart.addByOne(productId);
+  req.session.cart = cart;
+  res.redirect('/shopping-cart');
+});
+
+router.get('/remove/:id',function(req, res, next){
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+  cart.remove(productId);
+  req.session.cart = cart;
+  res.redirect('/shopping-cart');
+});
+
+
+
+
 router.get('/shopping-cart', function(req, res, next){
   if(!req.session.cart){
     return res.render('shops/shopping-cart', {products: null});
@@ -47,7 +79,7 @@ router.get('/search', function(req, res, next){
 
   var searchProduct = req.query.searchProduct;
   
-  if (searchProduct != null ) {
+  if (searchProduct == Product.title) {
     Product.find (function(err, docs){
       var productChunks =[];
       var chunkSize = 6;
@@ -57,7 +89,13 @@ router.get('/search', function(req, res, next){
       res.render('shops/search', { title: 'Shopping cart', products : productChunks});
     });
    }
+   else{
+      console.error('Product item not found.');
+      
+  
+   }
 });
+
 
 
 module.exports = router;

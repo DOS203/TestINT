@@ -35,9 +35,14 @@ router.get('/payment', (req, res) => {
   res.render('users/payment');
 });
 
-// cart route
-router.get('/cart', (req, res)=>{
-  res.render('users/cart');
+// admin-product route
+router.get('/admin-product', function(req, res, next) {
+ res.render('users/admin-product',{title:'add product'} );
+});
+
+router.post('/admin-product', (req, res) =>{
+  req.flash('succes_msg', 'Product added');
+  res.redirect('/');
 });
 
 // User Payment POST
@@ -105,7 +110,7 @@ router.put('/privilege/:id', (req, res) => { //update privilege level of user
   });
 });
 
-//Get Update Profile
+//Update Profile
 router.get('/edit', ensureAuthenticated, (req, res) => {
   res.render('users/edit');
 });
@@ -189,7 +194,7 @@ router.put('/:id', ensureAuthenticated, (req, res) => {
     user.save()
       .then(user => {
         req.flash('success_msg', 'Profile updated');
-        res.redirect('/users/edit');
+        res.redirect('/');
       })
   });
 });
@@ -338,9 +343,9 @@ const upload = multer ({
     fileSize: 1000000
  },
  fileFilter(req, file, cb) {
-  if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-    return cb(new Error('Please upload an image'))
-}
+   if(!file.originalname.endsWith('.jpg')) {
+     return cb(new Error('Please upload an image'))
+   }
    cb(undefined, true)
     
    // cb(new Error('File must be a image'))
@@ -360,7 +365,7 @@ router.post('/avatar', ensureAuthenticated, upload.single('avatar'), async (req,
   res.redirect("/users/edit")
 });
 
-router.get('/:id/avatar', ensureAuthenticated, async (req, res) => {
+router.get('/:id/avatar', async (req, res) => {
   try {
       const user = await User.findById(req.params.id)
 
@@ -373,12 +378,6 @@ router.get('/:id/avatar', ensureAuthenticated, async (req, res) => {
   } catch (e) {
       res.status(404).send()
   }
-})
-
-router.delete('/avatar', async (req, res) => {
-  req.user.avatar = undefined
-  await req.user.save()
-  res.send()
 })
 
 module.exports = router;

@@ -47,12 +47,12 @@ router.post('/payment', (req, res) => {
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'easygomailing@gmail.com',
-    pass: 'n20j15n17'
+    user: 'easyg3044@gmail.com',
+    pass: 'Easygo123'
   }
 })
 var mailOptions = {
-  from: 'easygomailing@gmail.com',
+  from: 'easyg3044@gmail.com',
   to: req.body.emailaddress,
 subject: 'Payment Confirmation',
 text: 'Succesful payment!'

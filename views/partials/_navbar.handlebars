@@ -37,33 +37,31 @@
 
                 
                       {{#if user}}
+             
                          <li class="nav-item active">
                                 <a href="/users/privilege" class="nav-link text-white">Privilege Management</a>
                              </li>
                          <li class="nav-item active">
-                                <a class="nav-link text-white" href="#">Cart</a>
+                                <a class="nav-link text-white" href="/users/admin-product">Admin-Product</a>
                              </li>
 
                              <li class="nav-item active">
                                     <a class="nav-link text-white" href="#">Items</a>
                             </li>
-                             <li class="nav-item">
-                              <a href="/delivery" class="nav-link">Delivery</a>
-                             </li>
-                             <li class="nav-item">
-                              <a href="/deliveryTracking" class="nav-link">Tracking</a>
-                             </li>
-                                  <li class="nav-item active">
-                            <a href="/users/edit" class="nav-link text-white">Account</a>
-                         </li>
-                            <li class="nav-item">
-            <a href="/users/logout" class="nav-link">Logout</a>
-          </li>
+                        <li class="nav-item dropdown">
+                               <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink">Account</a>
+                                          <div class="dropdown-menu">
+                                            <a href="/delivery" class="nav-link">Delivery</a>
+                                            <a href="/deliveryTracking" class="nav-link">Tracking</a>
+                                            <a href="/users/edit" class="nav-link">Profile</a>
+                                             <a href="/users/logout" class="nav-link"><font color="red">Logout</font></a>
+
+                            </li>
 
                               {{else}}
                             <li class="nav-item">
                               <a href="/users/login" class="nav-link text-white">Login</a>
-                             </li> 
+                             </li>
                              <li class="nav-item">
                               <a href="/users/register" class="nav-link text-white">Sign Up</a>
                              </li>
@@ -72,6 +70,9 @@
 
                 </ul>
             </div>
+             {{#if user}}
+             <img class="logo2" src="/users/{{user.id}}/avatar">
+                 {{/if}}
         </div>
 
 
