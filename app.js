@@ -102,9 +102,9 @@ app.get('/about', (req, res) => {
   res.render('about');
 });
 
-app.get('/payment', (req, res) => {
-  res.render('payment');
-});
+// app.get('/payment', (req, res) => {
+//   res.render('payment');
+// });
 
 app.get('/delivery', (req, res) => {
   res.render('delivery');
@@ -136,8 +136,5 @@ app.use('/', indexRouter);
 app.use((req ,res) => res.render('not_found'));
 
 
-const port = process.env.PORT || 5000;
 
-app.listen(port, () =>{
-  console.log(`Server started on port ${port}`);
-});
+module.exports = app

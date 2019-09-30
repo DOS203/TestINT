@@ -4,7 +4,7 @@
   "description": "APP to create Login",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node index.js",
     "test": "jest --watch"
   },
   "author": "Dino",
@@ -14,14 +14,13 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "buffer": "^5.4.3",
-    "chai": "^4.2.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.4",
+    "env-cmd": "^10.0.1",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "express-session": "^1.16.2",
     "method-override": "^3.0.0",
-    "mocha": "^6.2.0",
     "mongodb": "^3.3.0",
     "mongoose": "^4.13.19",
     "multer": "^1.4.2",
@@ -31,9 +30,10 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
     "path": "^0.12.7",
-    "sharp": "^0.23.0"
+    "sharp": "^0.23.1"
   },
   "devDependencies": {
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "supertest": "^4.0.2"
   }
 }

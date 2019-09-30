@@ -30,10 +30,6 @@ router.get('/register', (req, res) => {
   res.render('users/register');
 });
 
-// User Payment Route
-router.get('/payment', (req, res) => {
-  res.render('users/payment');
-});
 
 // admin-product route
 router.get('/admin-product', function(req, res, next) {
@@ -45,11 +41,7 @@ router.post('/admin-product', (req, res) =>{
   res.redirect('/');
 });
 
-// User Payment POST
-router.post('/payment', (req, res, next) => {
-  req.flash('success_msg', 'Payment Successful');
-  res.redirect('/');
-});
+
 
 //User Update Route
 router.get('/edit/:id', ensureAuthenticated, (req, res) => {
