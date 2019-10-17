@@ -1,47 +1,28 @@
-<br>
-<br>
 <div class="row">
   <div class="col-md-6 mx-auto">
-      <img class="logo" src="/users/{{user.id}}/avatar">
-      <h3 class="text-center">My Profile</h3>
+    <div class="card card-body">
+      <img class="logo" src="/img/logo.png">
+      <h3 class="text-center">Update</h3>
       <form action="/users/{{user.id}}?_method=PUT" method="post">
-      <input type="hidden" name="_method" value="PUT">
+      <input type="hidden" name="_method" value="PUT"
         <div class="form-group">
-          <label for="firstname">First Name</label>
-          <input type="text"  class="form-control" name="firstname" value="{{user.firstname}}" required>
+          <label for="name">Name</label>
+          <input type="text"  class="form-control" name="name" value="{{user.name}}" required>
         </div>
         <div class="form-group">
-          <label for="lastname">Last Name</label>
-          <input type="text"  class="form-control" name="lastname" value="{{user.lastname}}" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email Address</label>
+          <label for="email">Email</label>
           <input type="email" name="email" class="form-control" value="{{user.email}}" required>
         </div>
     
-
-
-         
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-
-          
- 
+        <button type="submit" class="btn btn-primary">Submit</button>
 
       </form>
-    <br>
-<br>
-<form action="/users/avatar" method="post" enctype="multipart/form-data">
-<label for="Image">Change profile image</label>
-<input type="file" name="avatar">
- <button type="submit" class="btn btn-primary">Upload image</button>
-</form>
 
-      <br>
-      {{!-- <form method="post" action="/users/{{user.id}}?_method=DELETE">
-      <input type="hidden" name="_method" value="DELETE"> --}}
-      {{!-- <input type="submit" class="btn btn-danger btn-block" value="Deactivate Account"> --}}
-      <a class="Link Link--alt Link--alt" href="/users/areusure">
-        <span class="Text small fwm"><span>Deactivate Account</span></span></a>
+       <form method="post" action="/users/{{user.id}}?_method=DELETE">
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit" class="btn btn-danger btn-block" value="Delete">
     </form>
+
+    </div>
   </div>
 </div>

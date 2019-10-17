@@ -1,8 +1,8 @@
 if(process.env.NODE_ENV == 'production'){
     module.exports = {mongoURI:
-        'mongodb://users:Test123@ds157946.mlab.com:57946/heroku_tlms4x2k'}
+        'mongodb://dino:dino203@ds163517.mlab.com:63517/heroku_c4k6ns9h'}
 
 }else{
-    module.exports = {mongoURI: 'mongodb://127.0.0.1:27017/LocalDev'}
+    module.exports = {mongoURI: 'mongodb://localhost/vidjot-dev'}
 
 }
